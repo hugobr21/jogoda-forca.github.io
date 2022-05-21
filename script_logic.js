@@ -23,6 +23,11 @@ var letter_w = document.getElementById("letter_w")
 var letter_x = document.getElementById("letter_x")
 var letter_y = document.getElementById("letter_y")
 var letter_z = document.getElementById("letter_z")
+var word = null;
+var word_splitted = null;
+var letterIndex = null;
+var letterPressed = null;
+var word_under = null;
 
 letter_a.addEventListener("click",letter_a_pressed)
 letter_b.addEventListener("click",letter_b_pressed)
@@ -152,13 +157,37 @@ function letter_z_pressed() {
 }
 
 function generateWordUnderlines(){
-    word = "RIO"
-    word_under = "_ ".repeat(word.length);
+    word = "DUQUEDECAXIAS"
+    word_under = "_".repeat(word.length);
+    word_under = word_under.split("");
+    word_under = word_under.join(" ");
+    document.getElementById("letters_space").innerHTML = word_under;
 }
 
+function getIndexesLetter(item){
+    if (item === letterPressed){
+        console.log(item,letterIndex,letterPressed);
+        console.log(word_under)
+        word_under = word_under.split(" ");
+        word_under = word_under.join("");
+        word_under = word_under.substring(0,letterIndex) + letterPressed + word_under.substring(letterIndex + letterPressed.length);
+        word_under = word_under.split("");
+        word_under = word_under.join(" ");
+        console.log(word_under);
+        document.getElementById("letters_space").innerHTML = word_under;
+    }
+    letterIndex++;
+}
 
 function evaluate_letter(letter_pressed){
-    console.log(letter_pressed);
-
-
+    letter_pressed = letter_pressed.toUpperCase();
+    letterPressed = letter_pressed;
+    if (word.includes(letter_pressed) === true){
+        word_splitted = word.split("");
+        letterIndex = 0;
+        word_splitted.forEach(getIndexesLetter);
+    }
+    console.log(word.includes(letter_pressed),word,word.indexOf(letter_pressed));
 }
+
+generateWordUnderlines();
