@@ -17,6 +17,7 @@ var letter_p = document.getElementById("letter_p")
 var letter_q = document.getElementById("letter_q")
 var letter_r = document.getElementById("letter_r")
 var letter_s = document.getElementById("letter_s")
+var letter_t = document.getElementById("letter_t")
 var letter_u = document.getElementById("letter_u")
 var letter_v = document.getElementById("letter_v")
 var letter_w = document.getElementById("letter_w")
@@ -28,6 +29,7 @@ var word_splitted = null;
 var letterIndex = null;
 var letterPressed = null;
 var word_under = null;
+var lives = 10;
 
 letter_a.addEventListener("click",letter_a_pressed)
 letter_b.addEventListener("click",letter_b_pressed)
@@ -48,6 +50,7 @@ letter_p.addEventListener("click",letter_p_pressed)
 letter_q.addEventListener("click",letter_q_pressed)
 letter_r.addEventListener("click",letter_r_pressed)
 letter_s.addEventListener("click",letter_s_pressed)
+letter_t.addEventListener("click",letter_t_pressed)
 letter_u.addEventListener("click",letter_u_pressed)
 letter_v.addEventListener("click",letter_v_pressed)
 letter_w.addEventListener("click",letter_w_pressed)
@@ -131,6 +134,10 @@ function letter_s_pressed() {
     console.log("letter_s_pressed");
     evaluate_letter("s");
 }
+function letter_t_pressed() {
+    console.log("letter_t_pressed");
+    evaluate_letter("t");
+}
 function letter_u_pressed() {
     console.log("letter_u_pressed");
     evaluate_letter("u");
@@ -162,6 +169,7 @@ function generateWordUnderlines(){
     word_under = word_under.split("");
     word_under = word_under.join(" ");
     document.getElementById("letters_space").innerHTML = word_under;
+    document.getElementById("htmlLives").innerHTML = `You have ${lives} lives`;
 }
 
 function getIndexesLetter(item){
@@ -186,6 +194,18 @@ function evaluate_letter(letter_pressed){
         word_splitted = word.split("");
         letterIndex = 0;
         word_splitted.forEach(getIndexesLetter);
+    } else{
+        lives--;
+        if(lives === 0 | lives < 0){
+            document.getElementById("htmlLives").innerHTML = `You was hanged!! :(`;
+            if(lives===0){
+                $("#htmlLives").after("<button>Try again!</button>");
+            }
+        } else{
+            document.getElementById("htmlLives").innerHTML = `You have ${lives} lives`;
+        }
+        
+
     }
     console.log(word.includes(letter_pressed),word,word.indexOf(letter_pressed));
 }
