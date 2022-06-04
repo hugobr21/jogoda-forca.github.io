@@ -1,3 +1,8 @@
+// TODO 
+// Incrementar função para tentar de novo
+//     - Ocultar botão try again quando for acionado
+//     - Reiniciar o jogo com a mesma palavra
+
 var letter_a = document.getElementById("letter_a")
 var letter_b = document.getElementById("letter_b")
 var letter_c = document.getElementById("letter_c")
@@ -24,6 +29,7 @@ var letter_w = document.getElementById("letter_w")
 var letter_x = document.getElementById("letter_x")
 var letter_y = document.getElementById("letter_y")
 var letter_z = document.getElementById("letter_z")
+var tryAgainButton = document.getElementById("tryAgainButton")
 var word = null;
 var word_splitted = null;
 var letterIndex = null;
@@ -57,6 +63,8 @@ letter_w.addEventListener("click",letter_w_pressed)
 letter_x.addEventListener("click",letter_x_pressed)
 letter_y.addEventListener("click",letter_y_pressed)
 letter_z.addEventListener("click",letter_z_pressed)
+tryAgainButton.addEventListener("click",tryAgainButtonPressed)
+
 
 function letter_a_pressed() {
     console.log("letter_a_pressed");
@@ -162,7 +170,12 @@ function letter_z_pressed() {
     console.log("letter_z_pressed");
     evaluate_letter("z");
 }
-
+function tryAgainButtonPressed() {
+    console.log("tryAgainButtonPressed")
+    lives = 10
+    generateWordUnderlines();
+    tryAgainButton.style.visibility = 'hidden';
+}
 function generateWordUnderlines(){
     word = "DUQUEDECAXIAS"
     word_under = "_".repeat(word.length);
@@ -199,13 +212,11 @@ function evaluate_letter(letter_pressed){
         if(lives === 0 | lives < 0){
             document.getElementById("htmlLives").innerHTML = `You was hanged!! :(`;
             if(lives===0){
-                $("#htmlLives").after("<button>Try again!</button>");
+                tryAgainButton.style.visibility = 'visible';
             }
         } else{
             document.getElementById("htmlLives").innerHTML = `You have ${lives} lives`;
         }
-        
-
     }
     console.log(word.includes(letter_pressed),word,word.indexOf(letter_pressed));
 }
